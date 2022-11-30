@@ -98,20 +98,41 @@ int main(int argc, char *argv[])
   {
     switch(token)
     {
-      case NUM: putc(f_out, "NUM "); break;
-      case ID:  printf("ID ");  break;
-      case SOM: printf("+ ");   break;
-      case SUB: printf("- ");   break;
-      case MUL: printf("* ");   break;
-      case DIV: printf("/ ");   break;
-      case IGL: printf(" = ");  break;
-      case PEV: printf("; \n"); break;
-      case APR: printf("( ");   break;
-      case FPR: printf(") ");   break;
-      case ERR: printf("ERR "); break;
+      case NUM:           putc(f_out, "NUM"); break;
+      case ID:            putc(f_out, "ID ");  break;
+      case SOM:           putc(f_out, "+ ");   break;
+      case SUB:           putc(f_out, "- ");   break;
+      case MUL:           putc(f_out, "* ");   break;
+      case DIV:           putc(f_out, "/ ");   break;
+      case IGL:           putc(f_out, " = ");  break;
+      case PEV:           putc(f_out, "; \n"); break;
+      case APR:           putc(f_out, "( ");   break;
+      case FPR:           putc(f_out, ") ");   break;
+      case ERR:           putc(f_out, "ERR "); break;
+      case IF:            putc(f_out, "if"); break;
+      case ELSE:          putc(f_out, "else"); break;
+      case INT:           putc(f_out, "int"); break;
+      case RETURN:        putc(f_out, "return"); break;
+      case VOID:          putc(f_out, "void"); break;
+      case WHILE:         putc(f_out, "while"); break;
+      case MENOR:         putc(f_out, "<"); break;
+      case MENORIGUAL:    putc(f_out, "<="); break;
+      case MAIOR:         putc(f_out, ">"); break;
+      case MAIORIGUAL:    putc(f_out, ">="); break;
+      case EQUAL:         putc(f_out, "=="); break;
+      case NOTEQUAL:      putc(f_out, "!="); break;
+      case VIRG:          putc(f_out, ","); break;
+      case ACOL:          putc(f_out, "["); break;
+      case FCOL:          putc(f_out, "]"); break;
+      case ACH:           putc(f_out, "{"); break;
+      case FCH:           putc(f_out, "}"); break;
+      case STARTCOMM:     putc(f_out, "/*"); break;
+      case ENDCOMM:       putc(f_out, "*/"); break;
+      case NEWLINE:       putc(f_out, "\n"); break;
+      case SPACE:         putc(f_out, " "); break;
     }
   }
-
+  fclose(f_out);
   return(0);
 }
 
