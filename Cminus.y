@@ -53,22 +53,50 @@ extern "C"
 entrada :	/* entrada vazia */
 	| 	entrada programa ;
 programa :	declaracao-lista ;
-declaracao-lista :	declaracao-lista declaracao | declaracao ;
-declaracao	:	var-declaracao | fun-declaracao ;
-var-declaracao : tipo-especificador ID |
-				 tipo-especificador ID [ NUM ] ;
+declaracao-lista :	declaracao-lista declaracao 
+					| declaracao ;
+declaracao	:	var-declaracao 
+				| fun-declaracao ;
+var-declaracao : tipo-especificador ID PEV
+				 | tipo-especificador ID ACOL NUM FCOL PEV;
 tipo-especificador	:	INT | VOID ;
-fun-declaracao : tipo-especificador ID ( params ) composto-decl ;
+fun-declaracao : tipo-especificador ID APR params FPR composto-decl ;
 params : param-lista | VOID;
-param-lista : param-lista,param | param ;
-param : tipo-especificador ID | tipo-especificador ID [ ] ; 
+param-lista : param-lista VIRG param | param ;
+param : tipo-especificador ID 
+		| tipo-especificador ID ACOL FCOL ; 
+composto-decl : { local-declaracoes statement-lista } ;
+local-declaracoes : local-declaracoes var-declaracao 
+					| vazio ;
+statement-lista : statement-lista statement | vazio ;
+statement : expressao-decl | compost-decl | selecao-decl 
+			| iteracao-decl | retorno-decl ;
+expressao-decl : expressao PEV | PEV ;
+selecao-decl : IF APR expressao FPR statement 
+			  | IF APR expressao FPR statement ELSE statement ;
+iteracao-decl : WHILE APR expressao FPR statement ;
+retorno-decl : RETURN PEV | RETURN expressao PEV;
+expressao = var IGL expressao | simples-expressao ;
+var : ID | ID ACOL expressao FCOL ;
+simples-expressao : soma-expressao relacional soma-expressao
+					| soma-expressao ;
+relacional : MENORIGUAL | MENOR | MAIOR | MAIORIGUAL 
+			| EQUAL | NOTEQUAL ;
+soma-expressao : soma-expressao soma termo | termo ;
+soma : SOM | SUB ;
+termo : termo mult fator | fator ;
+mult : MUL | DIV ;
+fator : APR expressao FPR | var | ativacao | NUM ;
+ativacao : ID APR args FPR ;
+args : arg-list | vazio ;
+arg-list : arg-list VIRG expressao | expressao ;
 
 %%
 
 int main()
 {
   extern int yydebug;
-  yydebug = 1;
+  yydebug = 0;
 
   printf("\nParser em execução...\n");
   abrirArq();
