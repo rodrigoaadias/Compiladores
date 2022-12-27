@@ -69,14 +69,14 @@ composto-decl : { local-declaracoes statement-lista } ;
 local-declaracoes : local-declaracoes var-declaracao 
 					| vazio ;
 statement-lista : statement-lista statement | vazio ;
-statement : expressao-decl | compost-decl | selecao-decl 
+statement : expressao-decl | composto-decl | selecao-decl 
 			| iteracao-decl | retorno-decl ;
 expressao-decl : expressao PEV | PEV ;
 selecao-decl : IF APR expressao FPR statement 
 			  | IF APR expressao FPR statement ELSE statement ;
 iteracao-decl : WHILE APR expressao FPR statement ;
 retorno-decl : RETURN PEV | RETURN expressao PEV;
-expressao = var IGL expressao | simples-expressao ;
+expressao : var IGL expressao | simples-expressao ;
 var : ID | ID ACOL expressao FCOL ;
 simples-expressao : soma-expressao relacional soma-expressao
 					| soma-expressao ;
@@ -90,7 +90,7 @@ fator : APR expressao FPR | var | ativacao | NUM ;
 ativacao : ID APR args FPR ;
 args : arg-list | vazio ;
 arg-list : arg-list VIRG expressao | expressao ;
-
+vazio : SPACE | NEWLINE ;
 %%
 
 int main()
