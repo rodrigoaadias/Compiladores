@@ -1,23 +1,29 @@
+/****************************************************/
+/* File: Cminus.y                                     */
+/* The C- Yacc/Bison specification file           */
+/****************************************************/
 %{
-//GLC para gerar parser para linguagem C-
-#include <stdio.h>
-%token YYDEBUG 0    //Para exibir na tela os passos da análise sintática quando o parser é executado
-void yyerror(char *);
-extern "C"
-{
-  int yylex(void);
-  void abrirArq();
-}
+#define YYPARSER /* distinguishes Yacc output from other code files */
+
+#include "globals.h"
+#include "util.h"
+#include "scan.h"
+/* #include "parse.h" */
+
+#define YYSTYPE TreeNode *
+static char * savedName; /* for use in assignments */
+static int savedLineNo;  /* ditto */
+static TreeNode * savedTree; /* stores syntax tree for later return */
+
 %}
 
-%start entrada
 %token NUM 
 %token ID  
 %token SOM 
 %token SUB 
 %token MUL 
 %token DIV 
-%token IGL 
+%token ASSIGN 
 %token PEV 
 %token APR 
 %token FPR 
@@ -31,33 +37,25 @@ extern "C"
 %token MENORIGUAL 
 %token MAIOR 
 %token MAIORIGUAL 
-%token EQUAL 
-%token NOTEQUAL 
+%token EQ 
+%token NEQ 
 %token VIRG 
 %token ACOL 
 %token FCOL 
 %token ACH 
 %token FCH 
-%token STARTCOMM 
-%token ENDCOMM 
-%token NEWLINE 
-%token SPACE 
-%token FIM 
-%token ERR 
-
-//Para mostrar o valor semântico to token quando for debugar o parser
-%printer { fprintf (yyoutput, "’%d’", $$); } NUM
+%token OVER 
+%token ENDFILE 
+%token ERROR 
 
 %%
 
-entrada :	/* entrada vazia */
-	| 	entrada programa ;
 programa :	declaracao-lista ;
 declaracao-lista :	declaracao-lista declaracao 
 					| declaracao ;
 declaracao	:	var-declaracao 
 				| fun-declaracao ;
-var-declaracao : tipo-especificador ID PEV
+var-declaracao : INT ID PEV
 				 | tipo-especificador ID ACOL NUM FCOL PEV;
 tipo-especificador	:	INT | VOID ;
 fun-declaracao : tipo-especificador ID APR params FPR composto-decl ;
@@ -67,8 +65,8 @@ param : tipo-especificador ID
 		| tipo-especificador ID ACOL FCOL ; 
 composto-decl : { local-declaracoes statement-lista } ;
 local-declaracoes : local-declaracoes var-declaracao 
-					| vazio ;
-statement-lista : statement-lista statement | vazio ;
+					| /* VAZIO */ ;
+statement-lista : statement-lista statement | /* VAZIO */ ;
 statement : expressao-decl | composto-decl | selecao-decl 
 			| iteracao-decl | retorno-decl ;
 expressao-decl : expressao PEV | PEV ;
@@ -88,23 +86,21 @@ termo : termo mult fator | fator ;
 mult : MUL | DIV ;
 fator : APR expressao FPR | var | ativacao | NUM ;
 ativacao : ID APR args FPR ;
-args : arg-list | vazio ;
+args : arg-list | /* VAZIO */ ;
 arg-list : arg-list VIRG expressao | expressao ;
-vazio : SPACE | NEWLINE ;
 %%
 
-int main()
-{
-  extern int yydebug;
-  yydebug = 0;
-
-  printf("\nParser em execução...\n");
-  abrirArq();
-  return yyparse();
+int yyerror(char * message)
+{ fprintf(listing,"Syntax error at line %d: %s\n",lineno,message);
+  fprintf(listing,"Current token: ");
+  printToken(yychar,tokenString);
+  Error = TRUE;
+  return 0;
 }
 
-void yyerror(char * msg)
-{
-  extern char* yytext;
-  printf("\n%s : %s %d\n", msg, yytext, yylval);
-}
+/* yylex calls getToken to make Yacc/Bison output
+ * compatible with ealier versions of the TINY scanner
+ */
+static int yylex(void)
+{ return getToken(); }
+
