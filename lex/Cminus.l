@@ -1,5 +1,4 @@
 %{
-%{
 #include "globals.h"
 #include "util.h"
 #include "scan.h"
