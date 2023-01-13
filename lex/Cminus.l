@@ -34,8 +34,6 @@ whitespace  [ \t]+
 "return"        return RETURN;
 "void"          return VOID;
 "while"         return WHILE;
-{DIGITO}+			  return NUM;
-{LETRA}+	      return ID;
 "+"				      return SOM;
 "-"				      return SUB;
 "*"				      return MUL;
