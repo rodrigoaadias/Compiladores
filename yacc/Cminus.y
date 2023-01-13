@@ -74,12 +74,12 @@ selecao-decl : IF APR expressao FPR statement
 			  | IF APR expressao FPR statement ELSE statement ;
 iteracao-decl : WHILE APR expressao FPR statement ;
 retorno-decl : RETURN PEV | RETURN expressao PEV;
-expressao : var IGL expressao | simples-expressao ;
+expressao : var ASSIGN expressao | simples-expressao ;
 var : ID | ID ACOL expressao FCOL ;
 simples-expressao : soma-expressao relacional soma-expressao
 					| soma-expressao ;
 relacional : MENORIGUAL | MENOR | MAIOR | MAIORIGUAL 
-			| EQUAL | NOTEQUAL ;
+			| EQ | NEQ ;
 soma-expressao : soma-expressao soma termo | termo ;
 soma : SOM | SUB ;
 termo : termo mult fator | fator ;
