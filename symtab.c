@@ -167,11 +167,11 @@ void printSymTab(FILE *listing)
       while (l != NULL)
       {
         LineList t = l->lines;
-        fprintf(listing, "%-8d  ", l->memloc);
-        fprintf(listing, "%-14s ", l->name);
-        fprintf(listing, "%-14s  ", l->scope);
-        fprintf(listing, "%-14s  ", l->typeID);
-        fprintf(listing, "%-14s  ", l->typeData);
+        fprintf(listing, "%-13d  ", l->memloc);
+        fprintf(listing, "%-10s ", l->name);
+        fprintf(listing, "%-12s  ", l->scope);
+        fprintf(listing, "%-10s  ", l->typeID);
+        fprintf(listing, "%-10s  ", l->typeData);
         while (t != NULL)
         {
           fprintf(listing, "%4d ", t->lineno);
