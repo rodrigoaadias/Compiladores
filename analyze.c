@@ -10,6 +10,12 @@
 #include "symtab.h"
 #include "analyze.h"
 
+static void typeError(TreeNode *t, char *message)
+{
+    fprintf(listing, "Type error in %s on line %d: %s\n", t->attr.name, t->lineno, message);
+    Error = TRUE;
+}
+
 /* counter for variable memory locations */
 static int location = 0;
 
@@ -161,12 +167,6 @@ void buildSymtab(TreeNode *syntaxTree)
         fprintf(listing, "\nSymbol table:\n\n");
         printSymTab(listing);
     }
-}
-
-static void typeError(TreeNode *t, char *message)
-{
-    fprintf(listing, "Type error in %s on line %d: %s\n", t->attr.name, t->lineno, message);
-    Error = TRUE;
 }
 
 /* Procedure checkNode performs

@@ -19,7 +19,7 @@ void st_insert(char *name, int lineno, int loc, char *scope, char *typeID, char 
 /* Function st_lookup returns the memory
  * location of a variable or -1 if not found
  */
-int st_lookup(char *name);
+int st_lookup(char *name, char *scope);
 
 char *st_lookup_type(char *name, char *scope);
 

@@ -110,7 +110,7 @@ void st_insert(char *name, int lineno, int loc, char *scope,
  */
 int st_lookup(char *name, char *scope)
 {
-  int h = hash(name);
+  int h = hash(name, scope);
   BucketList l = hashTable[h];
   while ((l != NULL) && (strcmp(name, l->name) != 0) && (strcmp(scope, l->scope) != 0))
     l = l->next;
