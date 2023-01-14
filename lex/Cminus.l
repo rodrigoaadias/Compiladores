@@ -15,19 +15,7 @@ whitespace  [ \t]+
 
 %option noyywrap
 %%
-"/*"            { char c;
-                  do
-                  { 
-                    c = input();
-                    if (c == EOF) break;
-                    if (c == '\n') lineno++;
-  		              if (c == '*') 
-                    { 
-		                  if(input() == '/')
-		                  break;
-		                }		
-                  } while (1);
-                }
+
 "if"            return IF;
 "else"          return ELSE;
 "int"           return INT;
@@ -57,6 +45,19 @@ whitespace  [ \t]+
 {identifier}    {return ID;}
 {newline}       {lineno++;}
 {whitespace}    {/* skip whitespace */}
+"/*"            { char c;
+                  do
+                  { 
+                    c = input();
+                    if (c == EOF) break;
+                    if (c == '\n') lineno++;
+  		              if (c == '*') 
+                    { 
+		                  if(input() == '/')
+		                  break;
+		                }		
+                  } while (1);
+                }
 .               {return ERROR;}
 
 %%
