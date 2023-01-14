@@ -127,7 +127,7 @@ param_lista 		: 	param_lista VIRG param
                               if(t != NULL)
                               {
                                    while(t->sibling != NULL)
-                                   t = t->sibling;
+                                        t = t->sibling;
                                    t->sibling = $3;
                                    $$ = $1;
                               }
@@ -160,27 +160,6 @@ param 			: 	INT ident
                               $$->child[0] = $2;
                               $2->attr.len = 1;
                               $2->type = IntegerK;
-                         }
-                    |    VOID ident
-                         {						   	
-                              $$ = newExpNode(TypeK);
-                              $2->nodekind = StmtK;
-                              $2->kind.stmt = VariableK;
-                              $$->type = VoidK;
-                              $2->type = VoidK; 	
-                              $$->attr.name = "vazio";
-                              $$->child[0] = $2;
-                         }
-                    | 	VOID ident ACOL FCOL
-                         {							
-                              $$ = newExpNode(TypeK);
-                              $2->nodekind = StmtK;
-                              $2->kind.stmt = VariableK;
-                              $$->type = VoidK;
-                              $$->attr.name = "vazio";
-                              $$->child[0] = $2;
-                              $2->attr.len = 1;
-                              $2->type = VoidK;
                          }
                     ; 
 
