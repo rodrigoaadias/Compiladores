@@ -13,6 +13,7 @@ identifier  {letter}+
 newline     \n
 whitespace  [ \t]+
 
+%option noyywrap
 %%
 "/*"            { char c;
                   do

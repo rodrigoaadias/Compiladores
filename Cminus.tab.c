@@ -1419,7 +1419,7 @@ yyreduce:
   case 2:
 #line 27 "yacc/Cminus.y"
                                                 {
-							savedTree = yyvsp[0]
+							savedTree = yyvsp[0];
 						}
 #line 1425 "Cminus.tab.c"
     break;
@@ -1468,13 +1468,13 @@ yyreduce:
   case 7:
 #line 62 "yacc/Cminus.y"
                                                 {
-							yyval = newExpNode(typeK);
-                            yyval->type = integerK;
+							yyval = newExpNode(TypeK);
+                            yyval->type = IntegerK;
                             yyval->attr.name = "inteiro";
                             yyval->child[0] = yyvsp[-1];
-                            yyvsp[-1]->nodekind = statementK;
-                            yyvsp[-1]->kind.stmt = variableK;
-							yyvsp[-1]->type = integerK;
+                            yyvsp[-1]->nodekind = StmtK;
+                            yyvsp[-1]->kind.stmt = VariableK;
+							yyvsp[-1]->type = IntegerK;
 						}
 #line 1480 "Cminus.tab.c"
     break;
@@ -1482,13 +1482,13 @@ yyreduce:
   case 8:
 #line 72 "yacc/Cminus.y"
                                                 {
-							yyval = newExpNode(typeK);
-                            yyval->type = integerK;
+							yyval = newExpNode(TypeK);
+                            yyval->type = IntegerK;
                             yyval->attr.name = "inteiro";
                             yyval->child[0] = yyvsp[-4];
-                            yyvsp[-4]->nodekind = statementK;
-                            yyvsp[-4]->kind.stmt = variableK;
-							yyvsp[-4]->type = integerK; 
+                            yyvsp[-4]->nodekind = StmtK;
+                            yyvsp[-4]->kind.stmt = VariableK;
+							yyvsp[-4]->type = IntegerK; 
                             yyvsp[-4]->attr.len = yyvsp[-2]->attr.val;
 						}
 #line 1495 "Cminus.tab.c"
@@ -1497,16 +1497,16 @@ yyreduce:
   case 9:
 #line 85 "yacc/Cminus.y"
                         {
-                        	yyval = newExpNode(typeK);
-                            yyval->type = integerK;
+                        	yyval = newExpNode(TypeK);
+                            yyval->type = IntegerK;
                             yyval->attr.name = "inteiro";
                             yyval->child[0] = yyvsp[-4];
                             yyvsp[-4]->child[0] = yyvsp[-2];
                             yyvsp[-4]->child[1] = yyvsp[0];
-                            yyvsp[-4]->nodekind = statementK;
-                            yyvsp[-4]->kind.stmt = functionK;
-							yyvsp[-4]->type = integerK;
-							yyvsp[-2]->type = integerK;
+                            yyvsp[-4]->nodekind = StmtK;
+                            yyvsp[-4]->kind.stmt = FunctionK;
+							yyvsp[-4]->type = IntegerK;
+							yyvsp[-2]->type = IntegerK;
 							aggScope(yyvsp[-4]->child[0], yyvsp[-4]->attr.name);
 							aggScope(yyvsp[-4]->child[1], yyvsp[-4]->attr.name);
                         }
@@ -1516,14 +1516,14 @@ yyreduce:
   case 10:
 #line 100 "yacc/Cminus.y"
                         {
-                        	yyval = newExpNode(typeK);
-                            yyval->type = voidK;
+                        	yyval = newExpNode(TypeK);
+                            yyval->type = VoidK;
                             yyval->attr.name = "void";
                             yyval->child[0] = yyvsp[-4];
                             yyvsp[-4]->child[0] = yyvsp[-2];
                             yyvsp[-4]->child[1] = yyvsp[0];
-                            yyvsp[-4]->nodekind = statementK;
-                            yyvsp[-4]->kind.stmt = functionK;
+                            yyvsp[-4]->nodekind = StmtK;
+                            yyvsp[-4]->kind.stmt = FunctionK;
 							aggScope(yyvsp[-4]->child[0], yyvsp[-4]->attr.name);
 							aggScope(yyvsp[-4]->child[1], yyvsp[-4]->attr.name);
                         }
@@ -1541,7 +1541,7 @@ yyreduce:
   case 12:
 #line 119 "yacc/Cminus.y"
                         {
-						  yyval = newExpNode(typeK);
+						  yyval = newExpNode(TypeK);
            				  yyval->attr.name = "void";
 						}
 #line 1548 "Cminus.tab.c"
@@ -1576,11 +1576,11 @@ yyreduce:
 #line 145 "yacc/Cminus.y"
                         {
 						   	
-                           yyval = newExpNode(typeK);
-					       yyvsp[0]->nodekind = statementK;
-                           yyvsp[0]->kind.stmt = variableK;
-                           yyval->type = integerK;
-						   yyvsp[0]->type = integerK; 	
+                           yyval = newExpNode(TypeK);
+					       yyvsp[0]->nodekind = StmtK;
+                           yyvsp[0]->kind.stmt = VariableK;
+                           yyval->type = IntegerK;
+						   yyvsp[0]->type = IntegerK; 	
                            yyval->attr.name = "inteiro";
                            yyval->child[0] = yyvsp[0];
                         }
@@ -1591,14 +1591,14 @@ yyreduce:
 #line 156 "yacc/Cminus.y"
                         {
 							
-                            yyval = newExpNode(typeK);
-							yyvsp[-2]->nodekind = statementK;
-                            yyvsp[-2]->kind.stmt = variableK;
-                            yyval->type = integerK;
+                            yyval = newExpNode(TypeK);
+							yyvsp[-2]->nodekind = StmtK;
+                            yyvsp[-2]->kind.stmt = VariableK;
+                            yyval->type = IntegerK;
                             yyval->attr.name = "inteiro";
                             yyval->child[0] = yyvsp[-2];
                             yyvsp[-2]->attr.len = 1;
-						    yyvsp[-2]->type = integerK;
+						    yyvsp[-2]->type = IntegerK;
                         }
 #line 1604 "Cminus.tab.c"
     break;
@@ -1750,7 +1750,7 @@ yyreduce:
   case 32:
 #line 263 "yacc/Cminus.y"
                         {
-                             yyval = newStmtNode(ifK);
+                             yyval = newStmtNode(IfK);
                              yyval->child[0] = yyvsp[-2];
                              yyval->child[1] = yyvsp[0];
                         }
@@ -1761,7 +1761,7 @@ yyreduce:
 #line 269 "yacc/Cminus.y"
                                                 {
 							 
-                             yyval = newStmtNode(ifK);
+                             yyval = newStmtNode(IfK);
                              yyval->child[0] = yyvsp[-4];
                              yyval->child[1] = yyvsp[-2];
                              yyval->child[2] = yyvsp[0];
@@ -1772,7 +1772,7 @@ yyreduce:
   case 34:
 #line 279 "yacc/Cminus.y"
                         {
-                             yyval = newStmtNode(whileK);
+                             yyval = newStmtNode(WhileK);
                              yyval->child[0] = yyvsp[-2];
                              yyval->child[1] = yyvsp[0];
                         }
@@ -1782,8 +1782,8 @@ yyreduce:
   case 35:
 #line 287 "yacc/Cminus.y"
                         {
-                            yyval = newStmtNode(returnK);
-							yyval->type = voidK;
+                            yyval = newStmtNode(ReturnK);
+							yyval->type = VoidK;
                        	}
 #line 1789 "Cminus.tab.c"
     break;
@@ -1791,7 +1791,7 @@ yyreduce:
   case 36:
 #line 292 "yacc/Cminus.y"
                         {
-                            yyval = newStmtNode(returnK);
+                            yyval = newStmtNode(ReturnK);
                             yyval->child[0] = yyvsp[-1];
                        	}
 #line 1798 "Cminus.tab.c"
@@ -1800,7 +1800,7 @@ yyreduce:
   case 37:
 #line 299 "yacc/Cminus.y"
                         {
-                            yyval = newStmtNode(assignK);
+                            yyval = newStmtNode(AssignK);
                             yyval->child[0] = yyvsp[-2];
                             yyval->child[1] = yyvsp[0];
                        	}
@@ -1828,8 +1828,8 @@ yyreduce:
                         {
                             yyval = yyvsp[-3];
                             yyval->child[0] = yyvsp[-1];
-                            yyval->kind.exp = vectorK;
-							yyval->type = integerK;
+                            yyval->kind.exp = VectorK;
+							yyval->type = IntegerK;
                        	}
 #line 1835 "Cminus.tab.c"
     break;
@@ -1855,9 +1855,9 @@ yyreduce:
   case 43:
 #line 336 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
-                            yyval->attr.op = LTE;                            
-							yyval->type = booleanK;
+                            yyval = newExpNode(OpK);
+                            yyval->attr.op = MENORIGUAL;                            
+							yyval->type = BooleanK;
                        	}
 #line 1863 "Cminus.tab.c"
     break;
@@ -1865,9 +1865,9 @@ yyreduce:
   case 44:
 #line 342 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
-                            yyval->attr.op = LT;                            
-							yyval->type = booleanK;
+                            yyval = newExpNode(OpK);
+                            yyval->attr.op = MENOR;                            
+							yyval->type = BooleanK;
                        	}
 #line 1873 "Cminus.tab.c"
     break;
@@ -1875,9 +1875,9 @@ yyreduce:
   case 45:
 #line 348 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
-                            yyval->attr.op = GT;                            
-							yyval->type = booleanK;
+                            yyval = newExpNode(OpK);
+                            yyval->attr.op = MAIOR;                            
+							yyval->type = BooleanK;
                        	}
 #line 1883 "Cminus.tab.c"
     break;
@@ -1885,9 +1885,9 @@ yyreduce:
   case 46:
 #line 354 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
-                            yyval->attr.op = GTE;                            
-							yyval->type = booleanK;
+                            yyval = newExpNode(OpK);
+                            yyval->attr.op = MAIORIGUAL;                            
+							yyval->type = BooleanK;
                        	}
 #line 1893 "Cminus.tab.c"
     break;
@@ -1895,9 +1895,9 @@ yyreduce:
   case 47:
 #line 360 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
+                            yyval = newExpNode(OpK);
                             yyval->attr.op = EQ;  
-							yyval->type = booleanK;                          
+							yyval->type = BooleanK;                          
                        	}
 #line 1903 "Cminus.tab.c"
     break;
@@ -1905,9 +1905,9 @@ yyreduce:
   case 48:
 #line 366 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
-                            yyval->attr.op = NE;
-							yyval->type = booleanK;                            
+                            yyval = newExpNode(OpK);
+                            yyval->attr.op =  NEQ;
+							yyval->type = BooleanK;                            
                        	}
 #line 1913 "Cminus.tab.c"
     break;
@@ -1933,7 +1933,7 @@ yyreduce:
   case 51:
 #line 386 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
+                            yyval = newExpNode(OpK);
                             yyval->attr.op = SOM;                            
                        	}
 #line 1940 "Cminus.tab.c"
@@ -1942,7 +1942,7 @@ yyreduce:
   case 52:
 #line 391 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
+                            yyval = newExpNode(OpK);
                             yyval->attr.op = SUB;                            
                        	}
 #line 1949 "Cminus.tab.c"
@@ -1969,8 +1969,8 @@ yyreduce:
   case 55:
 #line 409 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
-                            yyval->attr.op = TIMES;                            
+                            yyval = newExpNode(OpK);
+                            yyval->attr.op = MUL;                            
                         }
 #line 1976 "Cminus.tab.c"
     break;
@@ -1978,8 +1978,8 @@ yyreduce:
   case 56:
 #line 414 "yacc/Cminus.y"
                         {
-                            yyval = newExpNode(operationK);
-                            yyval->attr.op = OVER;                            
+                            yyval = newExpNode(OpK);
+                            yyval->attr.op = DIV;                            
                        	}
 #line 1985 "Cminus.tab.c"
     break;
@@ -2021,8 +2021,8 @@ yyreduce:
                         {
                             yyval = yyvsp[-3];
                             yyval->child[0] = yyvsp[-1];
-                            yyval->nodekind = statementK;
-                            yyval->kind.stmt = callK;
+                            yyval->nodekind = StmtK;
+                            yyval->kind.stmt = CallK;
                        	}
 #line 2028 "Cminus.tab.c"
     break;
@@ -2031,8 +2031,8 @@ yyreduce:
 #line 446 "yacc/Cminus.y"
                                                 {
                             yyval = yyvsp[-2];
-                            yyval->nodekind = statementK;
-                            yyval->kind.stmt = callK;
+                            yyval->nodekind = StmtK;
+                            yyval->kind.stmt = CallK;
                        	}
 #line 2038 "Cminus.tab.c"
     break;
@@ -2071,7 +2071,7 @@ yyreduce:
   case 66:
 #line 476 "yacc/Cminus.y"
                          {
-                             yyval = newExpNode(idK);
+                             yyval = newExpNode(IdK);
                              yyval->attr.name = copyString(tokenString);
                          }
 #line 2078 "Cminus.tab.c"
@@ -2086,9 +2086,9 @@ yyreduce:
   case 68:
 #line 486 "yacc/Cminus.y"
                         {
-                             yyval = newExpNode(constantK);
+                             yyval = newExpNode(ConstK);
                              yyval->attr.val = atoi(tokenString);
-							 yyval->type = integerK;
+							 yyval->type = IntegerK;
 						}
 #line 2094 "Cminus.tab.c"
     break;

@@ -17,11 +17,11 @@ main.o: main.c globals.h util.h scan.h analyze.h
 util.o: util.c util.h globals.h
 	$(CC) -c util.c
 
-lex.yy.o: cminus.l scan.h util.h globals.h
+lex.yy.o: lex/Cminus.l scan.h util.h globals.h
 	$(LEX) -o lex.yy.c lex/Cminus.l
 	$(CC) -c lex.yy.c
 
-cminus.tab.o: Cminus.y globals.h
+Cminus.tab.o: yacc/Cminus.y globals.h
 	$(BISON) -d yacc/Cminus.y
 	$(CC) -c Cminus.tab.c
 
