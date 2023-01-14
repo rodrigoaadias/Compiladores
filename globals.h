@@ -111,7 +111,7 @@ typedef struct treeNode
         ExpKind exp;
     } kind;
 
-    union
+    struct
     {
         TokenType op;
         int val;
