@@ -61,7 +61,7 @@ var_declaracao 	: 	INT ident PEV
                          {
                               $$ = newExpNode(TypeK);
                               $$->type = IntegerK;
-                              $$->attr.name = "inteiro";
+                              $$->attr.name = "integer";
                               $$->child[0] = $2;
                               $2->nodekind = StmtK;
                               $2->kind.stmt = VariableK;
@@ -71,7 +71,7 @@ var_declaracao 	: 	INT ident PEV
                          {
                               $$ = newExpNode(TypeK);
                               $$->type = IntegerK;
-                              $$->attr.name = "inteiro";
+                              $$->attr.name = "integer";
                               $$->child[0] = $2;
                               $2->nodekind = StmtK;
                               $2->kind.stmt = VariableK;
@@ -84,7 +84,7 @@ fun_declaracao 	: 	INT ident APR params FPR composto_decl
                          {
                               $$ = newExpNode(TypeK);
                               $$->type = IntegerK;
-                              $$->attr.name = "inteiro";
+                              $$->attr.name = "integer";
                               $$->child[0] = $2;
                               $2->child[0] = $4;
                               $2->child[1] = $6;
@@ -147,7 +147,7 @@ param 			: 	INT ident
                               $2->kind.stmt = VariableK;
                               $$->type = IntegerK;
                               $2->type = IntegerK; 	
-                              $$->attr.name = "inteiro";
+                              $$->attr.name = "integer";
                               $$->child[0] = $2;
                          }
                     | 	INT ident ACOL FCOL
@@ -156,7 +156,7 @@ param 			: 	INT ident
                               $2->nodekind = StmtK;
                               $2->kind.stmt = VariableK;
                               $$->type = IntegerK;
-                              $$->attr.name = "inteiro";
+                              $$->attr.name = "integer";
                               $$->child[0] = $2;
                               $2->attr.len = 1;
                               $2->type = IntegerK;
@@ -347,16 +347,28 @@ simples_expressao 	: 	soma_expressao relacional soma_expressao
                        	} 
 				;
 
-relacional 		: 	MENORIGUAL
+relacional 		: 	EQ
                        	{
                               $$ = newExpNode(OpK);
-                              $$->attr.op = MENORIGUAL;                            
-						$$->type = BooleanK;
+                              $$->attr.op = EQ;  
+						$$->type = BooleanK;                          
+                       	}
+				| 	NEQ
+                       	{
+                              $$ = newExpNode(OpK);
+                              $$->attr.op =  NEQ;
+						$$->type = BooleanK;                            
                        	}
 				| 	MENOR
                        	{
                               $$ = newExpNode(OpK);
                               $$->attr.op = MENOR;                            
+						$$->type = BooleanK;
+                       	}
+                    |    MENORIGUAL
+                       	{
+                              $$ = newExpNode(OpK);
+                              $$->attr.op = MENORIGUAL;                            
 						$$->type = BooleanK;
                        	}
 				| 	MAIOR
@@ -370,18 +382,6 @@ relacional 		: 	MENORIGUAL
                               $$ = newExpNode(OpK);
                               $$->attr.op = MAIORIGUAL;                            
 						$$->type = BooleanK;
-                       	}
-				| 	EQ
-                       	{
-                              $$ = newExpNode(OpK);
-                              $$->attr.op = EQ;  
-						$$->type = BooleanK;                          
-                       	}
-				| 	NEQ
-                       	{
-                              $$ = newExpNode(OpK);
-                              $$->attr.op =  NEQ;
-						$$->type = BooleanK;                            
                        	}
 				;
 
