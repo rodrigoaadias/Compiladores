@@ -60,52 +60,52 @@ declaracao			:	var_declaracao
 
 var_declaracao 		: 	INT ident PEV
 						{
-							$$ = newExpNode(typeK);
-                            $$->type = integerK;
+							$$ = newExpNode(TypeK);
+                            $$->type = IntegerK;
                             $$->attr.name = "inteiro";
                             $$->child[0] = $2;
                             $2->nodekind = statementK;
-                            $2->kind.stmt = variableK;
-							$2->type = integerK;
+                            $2->kind.stmt = VariableK;
+							$2->type = IntegerK;
 						}
 				 	| 	INT ident ACOL num FCOL PEV
 						{
-							$$ = newExpNode(typeK);
-                            $$->type = integerK;
+							$$ = newExpNode(TypeK);
+                            $$->type = IntegerK;
                             $$->attr.name = "inteiro";
                             $$->child[0] = $2;
                             $2->nodekind = statementK;
-                            $2->kind.stmt = variableK;
-							$2->type = integerK; 
+                            $2->kind.stmt = VariableK;
+							$2->type = IntegerK; 
                             $2->attr.len = $4->attr.val;
 						}
 					;
 
 fun_declaracao 		: 	INT ident APR params FPR composto_decl
                         {
-                        	$$ = newExpNode(typeK);
-                            $$->type = integerK;
+                        	$$ = newExpNode(TypeK);
+                            $$->type = IntegerK;
                             $$->attr.name = "inteiro";
                             $$->child[0] = $2;
                             $2->child[0] = $4;
                             $2->child[1] = $6;
                             $2->nodekind = statementK;
-                            $2->kind.stmt = functionK;
-							$2->type = integerK;
-							$4->type = integerK;
+                            $2->kind.stmt = FunctionK;
+							$2->type = IntegerK;
+							$4->type = IntegerK;
 							aggScope($2->child[0], $2->attr.name);
 							aggScope($2->child[1], $2->attr.name);
                         }
                     |   VOID ident APR params FPR composto_decl
                         {
-                        	$$ = newExpNode(typeK);
-                            $$->type = voidK;
+                        	$$ = newExpNode(TypeK);
+                            $$->type = VoidK;
                             $$->attr.name = "void";
                             $$->child[0] = $2;
                             $2->child[0] = $4;
                             $2->child[1] = $6;
                             $2->nodekind = statementK;
-                            $2->kind.stmt = functionK;
+                            $2->kind.stmt = FunctionK;
 							aggScope($2->child[0], $2->attr.name);
 							aggScope($2->child[1], $2->attr.name);
                         }
@@ -117,7 +117,7 @@ params 				: 	param_lista
                         }
 					| 	VOID
                         {
-						  $$ = newExpNode(typeK);
+						  $$ = newExpNode(TypeK);
            				  $$->attr.name = "void";
 						}
 					;
@@ -144,25 +144,25 @@ param_lista 		: 	param_lista VIRG param
 param 				: 	INT ident
                         {
 						   	
-                           $$ = newExpNode(typeK);
+                           $$ = newExpNode(TypeK);
 					       $2->nodekind = statementK;
-                           $2->kind.stmt = variableK;
-                           $$->type = integerK;
-						   $2->type = integerK; 	
+                           $2->kind.stmt = VariableK;
+                           $$->type = IntegerK;
+						   $2->type = IntegerK; 	
                            $$->attr.name = "inteiro";
                            $$->child[0] = $2;
                         }
 					| 	INT ident ACOL FCOL
                         {
 							
-                            $$ = newExpNode(typeK);
+                            $$ = newExpNode(TypeK);
 							$2->nodekind = statementK;
-                            $2->kind.stmt = variableK;
-                            $$->type = integerK;
+                            $2->kind.stmt = VariableK;
+                            $$->type = IntegerK;
                             $$->attr.name = "inteiro";
                             $$->child[0] = $2;
                             $2->attr.len = 1;
-						    $2->type = integerK;
+						    $2->type = IntegerK;
                         }
 					; 
 
@@ -261,14 +261,14 @@ expressao_decl 		: 	expressao PEV
 
 selecao_decl 		: 	IF APR expressao FPR statement 
                         {
-                             $$ = newStmtNode(ifK);
+                             $$ = newStmtNode(IfK);
                              $$->child[0] = $3;
                              $$->child[1] = $5;
                         } 
 			  		| 	IF APR expressao FPR statement ELSE statement 
 						{
 							 
-                             $$ = newStmtNode(ifK);
+                             $$ = newStmtNode(IfK);
                              $$->child[0] = $3;
                              $$->child[1] = $5;
                              $$->child[2] = $7;
@@ -277,7 +277,7 @@ selecao_decl 		: 	IF APR expressao FPR statement
 
 iteracao_decl 		: 	WHILE APR expressao FPR statement 
                         {
-                             $$ = newStmtNode(whileK);
+                             $$ = newStmtNode(WhileK);
                              $$->child[0] = $3;
                              $$->child[1] = $5;
                         }
@@ -285,19 +285,19 @@ iteracao_decl 		: 	WHILE APR expressao FPR statement
 
 retorno_decl 		: 	RETURN PEV 
                        	{
-                            $$ = newStmtNode(returnK);
-							$$->type = voidK;
+                            $$ = newStmtNode(ReturnK);
+							$$->type = VoidK;
                        	}
 					| 	RETURN expressao PEV
                        	{
-                            $$ = newStmtNode(returnK);
+                            $$ = newStmtNode(ReturnK);
                             $$->child[0] = $2;
                        	}
 					;
 
 expressao 			: 	var ASSIGN expressao 
                        	{
-                            $$ = newStmtNode(assignK);
+                            $$ = newStmtNode(AssignK);
                             $$->child[0] = $1;
                             $$->child[1] = $3;
                        	}
@@ -315,8 +315,8 @@ var 				: 	ident
                        	{
                             $$ = $1;
                             $$->child[0] = $3;
-                            $$->kind.exp = vectorK;
-							$$->type = integerK;
+                            $$->kind.exp = VectorK;
+							$$->type = IntegerK;
                        	}
 					;
 
@@ -334,39 +334,39 @@ simples_expressao 	: 	soma_expressao relacional soma_expressao
 
 relacional 			: 	MENORIGUAL
                        	{
-                            $$ = newExpNode(operationK);
-                            $$->attr.op = LTE;                            
-							$$->type = booleanK;
+                            $$ = newExpNode(OpK);
+                            $$->attr.op = MENORIGUAL;                            
+							$$->type = BooleanK;
                        	}
 					| 	MENOR
                        	{
-                            $$ = newExpNode(operationK);
-                            $$->attr.op = LT;                            
-							$$->type = booleanK;
+                            $$ = newExpNode(OpK);
+                            $$->attr.op = MENOR;                            
+							$$->type = BooleanK;
                        	}
 					| 	MAIOR
                        	{
-                            $$ = newExpNode(operationK);
-                            $$->attr.op = GT;                            
-							$$->type = booleanK;
+                            $$ = newExpNode(OpK);
+                            $$->attr.op = MAIOR;                            
+							$$->type = BooleanK;
                        	}
 					| 	MAIORIGUAL 
                        	{
-                            $$ = newExpNode(operationK);
-                            $$->attr.op = GTE;                            
-							$$->type = booleanK;
+                            $$ = newExpNode(OpK);
+                            $$->attr.op = MAIORIGUAL;                            
+							$$->type = BooleanK;
                        	}
 					| 	EQ
                        	{
-                            $$ = newExpNode(operationK);
+                            $$ = newExpNode(OpK);
                             $$->attr.op = EQ;  
-							$$->type = booleanK;                          
+							$$->type = BooleanK;                          
                        	}
 					| 	NEQ
                        	{
-                            $$ = newExpNode(operationK);
-                            $$->attr.op = NE;
-							$$->type = booleanK;                            
+                            $$ = newExpNode(OpK);
+                            $$->attr.op =  NEQ;
+							$$->type = BooleanK;                            
                        	}
 					;
 
@@ -384,12 +384,12 @@ soma_expressao 		: 	soma_expressao soma termo
 
 soma 				: 	SOM 
                        	{
-                            $$ = newExpNode(operationK);
+                            $$ = newExpNode(OpK);
                             $$->attr.op = SOM;                            
                        	}
 					| 	SUB
                        	{
-                            $$ = newExpNode(operationK);
+                            $$ = newExpNode(OpK);
                             $$->attr.op = SUB;                            
                        	}
 					;
@@ -407,13 +407,13 @@ termo 				: 	termo mult fator
 					;
 mult 				: 	MUL
                         {
-                            $$ = newExpNode(operationK);
-                            $$->attr.op = TIMES;                            
+                            $$ = newExpNode(OpK);
+                            $$->attr.op = MUL;                            
                         }
 					| 	DIV 
                        	{
-                            $$ = newExpNode(operationK);
-                            $$->attr.op = OVER;                            
+                            $$ = newExpNode(OpK);
+                            $$->attr.op = DIV;                            
                        	}
 					;
 
@@ -440,13 +440,13 @@ ativacao 			: 	ident APR arg_list FPR
                             $$ = $1;
                             $$->child[0] = $3;
                             $$->nodekind = statementK;
-                            $$->kind.stmt = callK;
+                            $$->kind.stmt = CallK;
                        	}
 					|	ident APR FPR
 					   	{
                             $$ = $1;
                             $$->nodekind = statementK;
-                            $$->kind.stmt = callK;
+                            $$->kind.stmt = CallK;
                        	}
 					;
 
@@ -484,9 +484,9 @@ num                 :    numero {$$ = $1;}
 
 numero              :   NUM
                         {
-                             $$ = newExpNode(constantK);
+                             $$ = newExpNode(ConstK);
                              $$->attr.val = atoi(tokenString);
-							 $$->type = integerK;
+							 $$->type = IntegerK;
 						}
                     ;		
 %%
