@@ -35,7 +35,7 @@ void printToken(TokenType token, const char *tokenString)
     case MUL:
         fprintf(listing, "*\n");
         break;
-    case OVER:
+    case DIV:
         fprintf(listing, "/\n");
         break;
     case MENOR:
