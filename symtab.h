@@ -14,17 +14,21 @@
  * loc = memory location is inserted only the
  * first time, otherwise ignored
  */
-void st_insert( char * name, int lineno, int loc );
+void st_insert(char *name, int lineno, int loc, char *scope, char *typeID, char *typeData);
 
-/* Function st_lookup returns the memory 
+/* Function st_lookup returns the memory
  * location of a variable or -1 if not found
  */
-int st_lookup ( char * name );
+int st_lookup(char *name);
 
-/* Procedure printSymTab prints a formatted 
- * listing of the symbol table contents 
+char *st_lookup_type(char *name, char *scope);
+
+char *st_lookup_typeID(char *name, char *scope);
+
+/* Procedure printSymTab prints a formatted
+ * listing of the symbol table contents
  * to the listing file
  */
-void printSymTab(FILE * listing);
+void printSymTab(FILE *listing);
 
 #endif
