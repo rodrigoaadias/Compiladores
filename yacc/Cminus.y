@@ -23,13 +23,13 @@ static int yylex(void);
 
 %%
 
-programa 			:	declaracao-lista
+programa 			:	declaracao_lista
 						{
 							savedTree = $1
 						} 
 					;
 
-declaracao-lista 	:	declaracao-lista declaracao 
+declaracao_lista 	:	declaracao_lista declaracao 
 						{
 							YYSTYPE t = $1;
                             if(t != NULL)
@@ -48,17 +48,17 @@ declaracao-lista 	:	declaracao-lista declaracao
                         }
 					;
 
-declaracao			:	var-declaracao
+declaracao			:	var_declaracao
 						{
 							$$ = $1;
 						}
-					| 	fun-declaracao 
+					| 	fun_declaracao 
 						{
 							$$ = $1;
 						}
 					;
 
-var-declaracao 		: 	INT ident PEV
+var_declaracao 		: 	INT ident PEV
 						{
 							$$ = newExpNode(typeK);
                             $$->type = integerK;
@@ -81,7 +81,7 @@ var-declaracao 		: 	INT ident PEV
 						}
 					;
 
-fun-declaracao 		: 	INT ident LPAREN params RPAREN compound_decl
+fun_declaracao 		: 	INT ident APR params FPR composto_decl
                         {
                         	$$ = newExpNode(typeK);
                             $$->type = integerK;
@@ -96,7 +96,7 @@ fun-declaracao 		: 	INT ident LPAREN params RPAREN compound_decl
 							aggScope($2->child[0], $2->attr.name);
 							aggScope($2->child[1], $2->attr.name);
                         }
-                    |   VOID ident APR params FPR compound_decl
+                    |   VOID ident APR params FPR composto_decl
                         {
                         	$$ = newExpNode(typeK);
                             $$->type = voidK;
@@ -111,7 +111,7 @@ fun-declaracao 		: 	INT ident LPAREN params RPAREN compound_decl
                         }
                     ;
 
-params 				: 	param-lista
+params 				: 	param_lista
                         {
                            $$ = $1;
                         }
@@ -122,7 +122,7 @@ params 				: 	param-lista
 						}
 					;
 
-param-lista 		: 	param-lista VIRG param 
+param_lista 		: 	param_lista VIRG param 
 						{
                            YYSTYPE t = $1;
                            if(t != NULL)
@@ -166,7 +166,7 @@ param 				: 	INT ident
                         }
 					; 
 
-composto-decl 		: 	ACH local-declaracoes statement-lista FCH
+composto_decl 		: 	ACH local_declaracoes statement_lista FCH
                         {
                             YYSTYPE t = $2;
                             if(t != NULL)
@@ -179,11 +179,11 @@ composto-decl 		: 	ACH local-declaracoes statement-lista FCH
                             else
                                $$ = $3;
                         }
-                    |   ACH local-declaracoes FCH
+                    |   ACH local_declaracoes FCH
                         {
                             $$ = $2;
                         }
-                    |   ACH statement-lista FCH
+                    |   ACH statement_lista FCH
                         {
                             $$ = $2;
                         }
@@ -192,7 +192,7 @@ composto-decl 		: 	ACH local-declaracoes statement-lista FCH
 			   			}
 					;
 
-local-declaracoes 	: 	local-declaracoes var-declaracao
+local_declaracoes 	: 	local_declaracoes var_declaracao
                         {
                             YYSTYPE t = $1;
                             if(t != NULL)
@@ -205,14 +205,15 @@ local-declaracoes 	: 	local-declaracoes var-declaracao
                             else
                                $$ = $2;
                         }
-					|   var-declaracao
+					|   var_d
+				eclaracao
                         {
                             $$ = $1;
                         }
 					| /* vazio */ {}
 					;
 
-statement-lista 	: 	statement-lista statement
+statement_lista 	: 	statement_lista statement
                         {
                            YYSTYPE t = $1;
                            if(t != NULL)
@@ -232,36 +233,36 @@ statement-lista 	: 	statement-lista statement
 					| /* VAZIO */ {}
 					;
 
-statement 			: 	expressao-decl
+statement 			: 	expressao_decl
                         {
                            $$ = $1;
                         }
-					| 	composto-decl
+					| 	composto_decl
                         {
                            $$ = $1;
                         }
-					| 	selecao-decl 
+					| 	selecao_decl 
                         {
                            $$ = $1;
                         }
-					| 	iteracao-decl
+					| 	iteracao_decl
                         {
                            $$ = $1;
                         }
-					| 	retorno-decl
+					| 	retorno_decl
                         {
                            $$ = $1;
                         }
 					;
 
-expressao-decl 		: 	expressao PEV
+expressao_decl 		: 	expressao PEV
                         {
                            $$ = $1;
                         }
 					| 	PEV {}
 					;
 
-selecao-decl 		: 	IF APR expressao FPR statement 
+selecao_decl 		: 	IF APR expressao FPR statement 
                         {
                              $$ = newStmtNode(ifK);
                              $$->child[0] = $3;
@@ -277,7 +278,7 @@ selecao-decl 		: 	IF APR expressao FPR statement
                         }
 					;
 
-iteracao-decl 		: 	WHILE APR expressao FPR statement 
+iteracao_decl 		: 	WHILE APR expressao FPR statement 
                         {
                              $$ = newStmtNode(whileK);
                              $$->child[0] = $3;
@@ -285,7 +286,7 @@ iteracao-decl 		: 	WHILE APR expressao FPR statement
                         }
 					;
 
-retorno-decl 		: 	RETURN PEV 
+retorno_decl 		: 	RETURN PEV 
                        	{
                             $$ = newStmtNode(returnK);
 							$$->type = voidK;
@@ -303,7 +304,7 @@ expressao 			: 	var ASSIGN expressao
                             $$->child[0] = $1;
                             $$->child[1] = $3;
                        	}
-					| 	simples-expressao
+					| 	simples_expressao
                        	{
                             $$ = $1;
                        	}
@@ -322,13 +323,13 @@ var 				: 	ident
                        	}
 					;
 
-simples-expressao 	: 	soma-expressao relacional soma-expressao
+simples_expressao 	: 	soma_expressao relacional soma_expressao
                        	{
                             $$ = $2;
                             $$->child[0] = $1;
                             $$->child[1] = $3;
                        	}
-					| 	soma-expressao
+					| 	soma_expressao
                        	{
                             $$ = $1;
                        	} 
@@ -372,7 +373,7 @@ relacional 			: 	MENORIGUAL
                        	}
 					;
 
-soma-expressao 		: 	soma-expressao soma termo 
+soma_expressao 		: 	soma_expressao soma termo 
                        	{
                             $$ = $2;
                             $$->child[0] = $1;
@@ -437,7 +438,7 @@ fator 				: 	APR expressao FPR
                        	}
 					;
 
-ativacao 			: 	ident APR arg-list FPR
+ativacao 			: 	ident APR arg_list FPR
                        	{
                             $$ = $1;
                             $$->child[0] = $3;
@@ -452,7 +453,7 @@ ativacao 			: 	ident APR arg-list FPR
                        	}
 					;
 
-arg-list 			: 	arg-list VIRG expressao
+arg_list 			: 	arg_list VIRG expressao
                        	{
                             YYSTYPE t = $1;
                              if(t != NULL)
