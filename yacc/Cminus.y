@@ -17,7 +17,7 @@ static int yylex(void);
 %}
 
 %token IF ELSE WHILE INT VOID RETURN
-%token num ident
+%token NUM ID
 %token ASSIGN EQ NEQ MENOR MENORIGUAL MAIOR MAIORIGUAL SOM SUB MUL DIV APR FPR ACOL FCOL ACH FCH VIRG PEV
 %token ERROR ENDFILE
 
@@ -205,12 +205,10 @@ local_declaracoes 	: 	local_declaracoes var_declaracao
                             else
                                $$ = $2;
                         }
-					|   var_d
-				eclaracao
+					|   var_declaracao
                         {
                             $$ = $1;
                         }
-					| /* vazio */ {}
 					;
 
 statement_lista 	: 	statement_lista statement
@@ -230,7 +228,6 @@ statement_lista 	: 	statement_lista statement
                         {
                            $$ = $1;
                         }
-					| /* VAZIO */ {}
 					;
 
 statement 			: 	expressao_decl
@@ -472,20 +469,26 @@ arg_list 			: 	arg_list VIRG expressao
                         }
 					;
 
-ident               :   ID
-                        {
-                             $$ = newExpNode(idK);
-                             $$->attr.name = copyString(tokenString);
-                        }
+ident               :    identificador {$$ = $1;}
                     ;
 
-num                 :   NUM
+identificador       :    ID
+                         {
+                             $$ = newExpNode(idK);
+                             $$->attr.name = copyString(tokenString);
+                         }
+                    ;
+
+num                 :    numero {$$ = $1;}
+                    ;
+
+numero              :   NUM
                         {
                              $$ = newExpNode(constantK);
                              $$->attr.val = atoi(tokenString);
 							 $$->type = integerK;
 						}
-                    ;			
+                    ;		
 %%
 
 int yyerror(char * message)
