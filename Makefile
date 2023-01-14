@@ -1,49 +1,39 @@
-#
-# Makefile for TINY
-# Gnu C Version
-# K. Louden 2/3/98
-#
+# Makefile for C-Minus compiler
 
 CC = gcc
+BISON = bison
+LEX = flex
 
-CFLAGS = 
+BIN = compiler
 
-OBJS = main.o util.o scan.o parse.o symtab.o analyze.o code.o cgen.o
+OBJS = cminus.tab.o lex.yy.o main.o util.o symtab.o analyze.o
 
-tiny: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o tiny
+$(BIN): $(OBJS)
+	$(CC) $(OBJS) -o $(BIN)
 
-main.o: main.c globals.h util.h scan.h parse.h analyze.h cgen.h
-	$(CC) $(CFLAGS) -c main.c
+main.o: main.c globals.h util.h scan.h analyze.h
+	$(CC) -c main.c
 
 util.o: util.c util.h globals.h
-	$(CC) $(CFLAGS) -c util.c
-
-scan.o: scan.c scan.h util.h globals.h
-	$(CC) $(CFLAGS) -c scan.c
-
-parse.o: parse.c parse.h scan.h globals.h util.h
-	$(CC) $(CFLAGS) -c parse.c
+	$(CC) -c util.c
 
 symtab.o: symtab.c symtab.h
-	$(CC) $(CFLAGS) -c symtab.c
+	$(CC) -c symtab.c
 
 analyze.o: analyze.c globals.h symtab.h analyze.h
-	$(CC) $(CFLAGS) -c analyze.c
+	$(CC) -c analyze.c
 
-code.o: code.c code.h globals.h
-	$(CC) $(CFLAGS) -c code.c
+lex.yy.o: cminus.l scan.h util.h globals.h
+	$(LEX) -o lex.yy.c cminus.l
+	$(CC) -c lex.yy.c
 
-cgen.o: cgen.c globals.h symtab.h code.h cgen.h
-	$(CC) $(CFLAGS) -c cgen.c
+cminus.tab.o: cminus.y globals.h
+	$(BISON) -d cminus.y
+	$(CC) -c cminus.tab.c
 
 clean:
-	-rm tiny
-	-rm tm
-	-rm $(OBJS)
-
-tm: tm.c
-	$(CC) $(CFLAGS) tm.c -o tm
-
-all: tiny tm
-
+	-rm -f $(BIN)
+	-rm -f cminus.tab.c
+	-rm -f cminus.tab.h
+	-rm -f lex.yy.c
+	-rm -f $(OBJS)

@@ -25,24 +25,7 @@ void printToken(TokenType token, const char *tokenString)
         fprintf(listing,
                 "reserved word: %s\n", tokenString);
         break;
-    case ASSIGN:
-        fprintf(listing, "=\n");
-        break;
-    case MENOR:
-        fprintf(listing, "<\n");
-        break;
-    case EQ:
-        fprintf(listing, "==\n");
-        break;
-    case APR:
-        fprintf(listing, "(\n");
-        break;
-    case FPR:
-        fprintf(listing, ")\n");
-        break;
-    case PEV:
-        fprintf(listing, ";\n");
-        break;
+
     case SOM:
         fprintf(listing, "+\n");
         break;
@@ -55,23 +38,80 @@ void printToken(TokenType token, const char *tokenString)
     case OVER:
         fprintf(listing, "/\n");
         break;
+    case MENOR:
+        fprintf(listing, "<\n");
+        break;
+    case MENORIGUAL:
+        fprintf(listing, "<=\n");
+        break;
+    case MAIOR:
+        fprintf(listing, ">\n");
+        break;
+    case MAIORIGUAL:
+        fprintf(listing, ">=\n");
+        break;
+    case EQ:
+        fprintf(listing, "==\n");
+        break;
+    case NEQ:
+        fprintf(listing, "!=\n");
+        break;
+    case ASSIGN:
+        fprintf(listing, "=\n");
+        break;
+    case PEV:
+        fprintf(listing, ";\n");
+        break;
+    case VIRG:
+        fprintf(listing, ",\n");
+        break;
+    case APR:
+        fprintf(listing, "(\n");
+        break;
+    case FPR:
+        fprintf(listing, ")\n");
+        break;
+    case ACOL:
+        fprintf(listing, "[\n");
+        break;
+    case FCOL:
+        fprintf(listing, "]\n");
+        break;
+    case ACH:
+        fprintf(listing, "{\n");
+        break;
+    case FCH:
+        fprintf(listing, "}\n");
+        break;
     case ENDFILE:
-        fprintf(listing, "EOF\n");
+        fprintf(listing, "%s %s\n", "ENDFILE", "EOF");
         break;
     case NUM:
-        fprintf(listing,
-                "NUM, val= %s\n", tokenString);
+        fprintf(listing, "NUM, val = %s\n", tokenString);
         break;
     case ID:
-        fprintf(listing,
-                "ID, name= %s\n", tokenString);
+        fprintf(listing, "ID, name = %s\n", tokenString);
         break;
     case ERROR:
-        fprintf(listing,
-                "ERROR: %s\n", tokenString);
+        fprintf(listing, "ERROR: %s\n", tokenString);
         break;
     default: /* should never happen */
         fprintf(listing, "Unknown token: %d\n", token);
+    }
+}
+
+/* atribuicao do escopo em nos da arvore */
+void aggScope(TreeNode *t, char *scope)
+{
+    int i;
+    while (t != NULL)
+    {
+        for (i = 0; i < MAXCHILDREN; ++i)
+        {
+            t->attr.scope = scope;
+            aggScope(t->child[i], scope);
+        }
+        t = t->sibling;
     }
 }
 
@@ -92,6 +132,7 @@ TreeNode *newStmtNode(StmtKind kind)
         t->nodekind = StmtK;
         t->kind.stmt = kind;
         t->lineno = lineno;
+        t->attr.scope = "global";
     }
     return t;
 }
@@ -113,7 +154,8 @@ TreeNode *newExpNode(ExpKind kind)
         t->nodekind = ExpK;
         t->kind.exp = kind;
         t->lineno = lineno;
-        t->type = Void;
+        t->type = VOID;
+        t->attr.scope = "global";
     }
     return t;
 }

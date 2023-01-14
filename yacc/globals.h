@@ -78,6 +78,7 @@ typedef enum
     ReturnK,
     NumberK
 } StmtKind;
+
 typedef enum
 {
     OpK,
@@ -91,9 +92,9 @@ typedef enum
 /* ExpType is used for type checking */
 typedef enum
 {
-    Void,
-    Integer,
-    Boolean
+    VoidK,
+    IntegerK,
+    BooleanK
 } ExpType;
 
 #define MAXCHILDREN 3
@@ -109,11 +110,14 @@ typedef struct treeNode
         StmtKind stmt;
         ExpKind exp;
     } kind;
+
     union
     {
         TokenType op;
         int val;
+        int len;
         char *name;
+        char *scope;
     } attr;
     ExpType type; /* for type checking of exps */
 } TreeNode;
