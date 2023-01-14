@@ -55,7 +55,7 @@ extern int yydebug;
     SUB = 261,
     MUL = 262,
     DIV = 263,
-    IGL = 264,
+    ASSIGN = 264,
     PEV = 265,
     APR = 266,
     FPR = 267,
@@ -69,19 +69,16 @@ extern int yydebug;
     MENORIGUAL = 275,
     MAIOR = 276,
     MAIORIGUAL = 277,
-    EQUAL = 278,
-    NOTEQUAL = 279,
+    EQ = 278,
+    NEQ = 279,
     VIRG = 280,
     ACOL = 281,
     FCOL = 282,
     ACH = 283,
     FCH = 284,
-    STARTCOMM = 285,
-    ENDCOMM = 286,
-    NEWLINE = 287,
-    SPACE = 288,
-    FIM = 289,
-    ERR = 290
+    OVER = 285,
+    ENDFILE = 286,
+    ERROR = 287
   };
 #endif
 

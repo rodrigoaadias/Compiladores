@@ -6,7 +6,7 @@ LEX = flex
 
 BIN = compiler
 
-OBJS = cminus.tab.o lex.yy.o main.o util.o symtab.o analyze.o
+OBJS = Cminus.tab.o lex.yy.o main.o util.o
 
 $(BIN): $(OBJS)
 	$(CC) $(OBJS) -o $(BIN)
@@ -17,23 +17,17 @@ main.o: main.c globals.h util.h scan.h analyze.h
 util.o: util.c util.h globals.h
 	$(CC) -c util.c
 
-symtab.o: symtab.c symtab.h
-	$(CC) -c symtab.c
-
-analyze.o: analyze.c globals.h symtab.h analyze.h
-	$(CC) -c analyze.c
-
 lex.yy.o: cminus.l scan.h util.h globals.h
-	$(LEX) -o lex.yy.c cminus.l
+	$(LEX) -o lex.yy.c lex/Cminus.l
 	$(CC) -c lex.yy.c
 
-cminus.tab.o: cminus.y globals.h
-	$(BISON) -d cminus.y
-	$(CC) -c cminus.tab.c
+cminus.tab.o: Cminus.y globals.h
+	$(BISON) -d yacc/Cminus.y
+	$(CC) -c Cminus.tab.c
 
 clean:
 	-rm -f $(BIN)
-	-rm -f cminus.tab.c
-	-rm -f cminus.tab.h
+	-rm -f Cminus.tab.c
+	-rm -f Cminus.tab.h
 	-rm -f lex.yy.c
 	-rm -f $(OBJS)
