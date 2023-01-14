@@ -25,7 +25,7 @@ static int yylex(void);
 
 programa 			:	declaracao_lista
 						{
-							savedTree = $1
+							savedTree = $1;
 						} 
 					;
 
@@ -64,7 +64,7 @@ var_declaracao 		: 	INT ident PEV
                             $$->type = IntegerK;
                             $$->attr.name = "inteiro";
                             $$->child[0] = $2;
-                            $2->nodekind = statementK;
+                            $2->nodekind = StmtK;
                             $2->kind.stmt = VariableK;
 							$2->type = IntegerK;
 						}
@@ -74,7 +74,7 @@ var_declaracao 		: 	INT ident PEV
                             $$->type = IntegerK;
                             $$->attr.name = "inteiro";
                             $$->child[0] = $2;
-                            $2->nodekind = statementK;
+                            $2->nodekind = StmtK;
                             $2->kind.stmt = VariableK;
 							$2->type = IntegerK; 
                             $2->attr.len = $4->attr.val;
@@ -89,7 +89,7 @@ fun_declaracao 		: 	INT ident APR params FPR composto_decl
                             $$->child[0] = $2;
                             $2->child[0] = $4;
                             $2->child[1] = $6;
-                            $2->nodekind = statementK;
+                            $2->nodekind = StmtK;
                             $2->kind.stmt = FunctionK;
 							$2->type = IntegerK;
 							$4->type = IntegerK;
@@ -104,7 +104,7 @@ fun_declaracao 		: 	INT ident APR params FPR composto_decl
                             $$->child[0] = $2;
                             $2->child[0] = $4;
                             $2->child[1] = $6;
-                            $2->nodekind = statementK;
+                            $2->nodekind = StmtK;
                             $2->kind.stmt = FunctionK;
 							aggScope($2->child[0], $2->attr.name);
 							aggScope($2->child[1], $2->attr.name);
@@ -145,7 +145,7 @@ param 				: 	INT ident
                         {
 						   	
                            $$ = newExpNode(TypeK);
-					       $2->nodekind = statementK;
+					       $2->nodekind = StmtK;
                            $2->kind.stmt = VariableK;
                            $$->type = IntegerK;
 						   $2->type = IntegerK; 	
@@ -156,7 +156,7 @@ param 				: 	INT ident
                         {
 							
                             $$ = newExpNode(TypeK);
-							$2->nodekind = statementK;
+							$2->nodekind = StmtK;
                             $2->kind.stmt = VariableK;
                             $$->type = IntegerK;
                             $$->attr.name = "inteiro";
@@ -439,13 +439,13 @@ ativacao 			: 	ident APR arg_list FPR
                        	{
                             $$ = $1;
                             $$->child[0] = $3;
-                            $$->nodekind = statementK;
+                            $$->nodekind = StmtK;
                             $$->kind.stmt = CallK;
                        	}
 					|	ident APR FPR
 					   	{
                             $$ = $1;
-                            $$->nodekind = statementK;
+                            $$->nodekind = StmtK;
                             $$->kind.stmt = CallK;
                        	}
 					;
@@ -474,7 +474,7 @@ ident               :    identificador {$$ = $1;}
 
 identificador       :    ID
                          {
-                             $$ = newExpNode(idK);
+                             $$ = newExpNode(IdK);
                              $$->attr.name = copyString(tokenString);
                          }
                     ;
