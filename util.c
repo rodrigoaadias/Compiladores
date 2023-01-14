@@ -96,7 +96,7 @@ void printToken(TokenType token, const char *tokenString)
         fprintf(listing, "ERROR: %s\n", tokenString);
         break;
     default: /* should never happen */
-        fprintf(listing, "Unknown token: %d\n", token);
+        fprintf(listing, "Unknown token: %d with token string: $s\n", token, tokenString);
     }
 }
 
@@ -213,26 +213,26 @@ void printTree(TreeNode *tree)
                 fprintf(listing, "If\n");
                 break;
             case AssignK:
-                fprintf(listing, "Atribuicao\n");
+                fprintf(listing, "Assignment\n");
                 break;
             case WhileK:
                 fprintf(listing, "While\n");
                 break;
             case VariableK:
-                fprintf(listing, "Variavel %s\n", tree->attr.name);
+                fprintf(listing, "Variable %s\n", tree->attr.name);
                 break;
             case FunctionK:
-                fprintf(listing, "Funcao %s\n", tree->attr.name);
+                fprintf(listing, "Function %s\n", tree->attr.name);
                 break;
             case CallK:
-                fprintf(listing, "Chamada de Funcao %s \n", tree->attr.name);
+                fprintf(listing, "Function call %s \n", tree->attr.name);
                 break;
             case ReturnK:
                 fprintf(listing, "Return\n");
                 break;
 
             default:
-                fprintf(listing, "No de expressao desconhecido\n");
+                fprintf(listing, "Unknown expression no\n");
                 break;
             }
         }
@@ -241,32 +241,32 @@ void printTree(TreeNode *tree)
             switch (tree->kind.exp)
             {
             case OpK:
-                fprintf(listing, "Operacao: ");
+                fprintf(listing, "Operation: ");
                 printToken(tree->attr.op, "\0");
                 break;
             case ConstK:
-                fprintf(listing, "Constante: %d\n", tree->attr.val);
+                fprintf(listing, "Constant: %d\n", tree->attr.val);
                 break;
             case IdK:
                 fprintf(listing, "Id: %s\n", tree->attr.name);
                 break;
             case VectorK:
-                fprintf(listing, "Vetor: %s\n", tree->attr.name);
+                fprintf(listing, "Array: %s\n", tree->attr.name);
                 break;
             case VectorIdK:
-                fprintf(listing, "Indice [%d]\n", tree->attr.val);
+                fprintf(listing, "Index [%d]\n", tree->attr.val);
                 break;
             case TypeK:
-                fprintf(listing, "Tipo %s\n", tree->attr.name);
+                fprintf(listing, "Type %s\n", tree->attr.name);
                 break;
 
             default:
-                fprintf(listing, "No de expressao desconhecido\n");
+                fprintf(listing, "Unknown expression no\n");
                 break;
             }
         }
         else
-            fprintf(listing, "No de tipo desconhecido\n");
+            fprintf(listing, "Unknown expression no\n");
         for (i = 0; i < MAXCHILDREN; i++)
             printTree(tree->child[i]);
         tree = tree->sibling;
