@@ -112,7 +112,7 @@ static void insertNode(TreeNode *t)
             if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
             {
                 if (strcmp(t->attr.name, "input") != 0 & strcmp(t->attr.name, "output") != 0)
-                    typeError(t, "Error 5: Invalid call. Not delcared.");
+                    typeError(t, "Error 5: Invalid call. Not declared.");
             }
             else
                 st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "call", "-");
