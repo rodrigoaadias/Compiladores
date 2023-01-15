@@ -64,86 +64,96 @@ static void insertNode(TreeNode *t)
     case StmtK:
         switch (t->kind.stmt)
         {
-        case VariableK:
-            if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
-            {
-                if (t->attr.len > 0) // declaracao de vetor
-                    st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "array", "integer");
-                else // declaracao de variavel simples
-                    st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "variable", "integer");
-            }
-            else
-                typeError(t, "Error 4: Invalid declaration. Already declared.");
-            break;
-        case FunctionK:
-            if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
-            {
-                if (t->type == IntegerK)
+            case VariableK:
+                if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
                 {
-                    /* not yet in table, so treat as new definition */
-                    st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "function", "integer");
+                    if(t->type == VoidK)
+                    {
+                        typeError(t, "Error 3: Invalid declaration. Variable can't be void.");
+                    }
+                    else
+                    {
+                        if (t->attr.len > 0) // declaracao de vetor
+                            st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "array", "integer");
+                        else // declaracao de variavel simples
+                            st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "variable", "integer");
+                    }
                 }
                 else
                 {
-                    /* already in table, so ignore location,
-                       add line number of use only */
-                    st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "function", "void");
+                    printf("\nERROR TEST: %s\n", st_lookup_typeID(t->attr.name, t->attr.scope));
+                    typeError(t, "Error 4: Invalid declaration. Already declared.");
                 }
-            }
-            else
-                typeError(t, "Error 4: Invalid declaration. Already declared.");
-            break;
+                break;
+            case FunctionK:
+                if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
+                {
+                    if (t->type == IntegerK)
+                    {
+                        /* not yet in table, so treat as new definition */
+                        st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "function", "integer");
+                    }
+                    else
+                    {
+                        /* already in table, so ignore location,
+                        add line number of use only */
+                        st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "function", "void");
+                    }
+                }
+                else
+                    typeError(t, "Error 4: Invalid declaration. Already declared.");
+                break;
 
-        case CallK:
-            if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
-            {
-                if (!strcmp(t->attr.name, "input") && !strcmp(t->attr.name, "output"))
-                    typeError(t, "Erro 5: Invalid call. Not delcared.");
-            }
-            else
-                st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "call", "-");
-        case ReturnK:
-            break;
-        default:
-            break;
+            case CallK:
+                if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
+                {
+                    if (!strcmp(t->attr.name, "input") && !strcmp(t->attr.name, "output"))
+                        typeError(t, "Error 5: Invalid call. Not delcared.");
+                }
+                else
+                    st_insert(t->attr.name, t->lineno, location++, t->attr.scope, "call", "-");
+            case ReturnK:
+                break;
+            default:
+                break;
         }
         break;
     case ExpK:
         switch (t->kind.exp)
         {
-        case IdK:
-            if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
-            {
-                typeError(t, "Error 1: Not declared");
-            }
-            else
-            {
-                st_insert(t->attr.name, t->lineno, 0, t->attr.scope, "variable", "integer");
-            }
-            break;
-        case VectorK:
-            if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
-            {
-                typeError(t, "Error 1: Not declared");
-            }
-            else
-            {
-                st_insert(t->attr.name, t->lineno, 0, t->attr.scope, "array", "integer");
-            }
-            break;
-        case VectorIdK:
-            if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
-            {
-                typeError(t, "Error 1: Not declared");
-            }
-            else
-            {
-                st_insert(t->attr.name, t->lineno, 0, t->attr.scope, "array index", "integer");
-            }
-        case TypeK:
-            break;
-        default:
-            break;
+            case IdK:
+                if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
+                {
+                    typeError(t, "Error 1: Not declared");
+                }
+                else
+                {
+                    st_insert(t->attr.name, t->lineno, 0, t->attr.scope, "variable", "integer");
+                }
+                break;
+            case VectorK:
+                if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
+                {
+                    typeError(t, "Error 1: Not declared");
+                }
+                else
+                {
+                    st_insert(t->attr.name, t->lineno, 0, t->attr.scope, "array", "integer");
+                }
+                break;
+            case VectorIdK:
+                if (st_lookup(t->attr.name, t->attr.scope) == -1 && st_lookup(t->attr.name, "global") == -1)
+                {
+                    typeError(t, "Error 1: Not declared");
+                }
+                else
+                {
+                    st_insert(t->attr.name, t->lineno, 0, t->attr.scope, "array index", "integer");
+                }
+            case TypeK:
+                break;
+            default:
+                break;
         }
         break;
     default:
@@ -159,7 +169,7 @@ void buildSymtab(TreeNode *syntaxTree)
     traverse(syntaxTree, insertNode, nullProc);
     if (st_lookup("main", "global") == -1)
     {
-        printf("main not declared");
+        printf("Error 6: main function not declared");
         Error = TRUE;
     }
     if (TraceAnalyze)
@@ -176,37 +186,37 @@ static void checkNode(TreeNode *t)
 {
     switch (t->nodekind)
     {
-    case ExpK:
-        switch (t->kind.exp)
-        {
-        case OpK:
-            break;
-        default:
-            break;
-        }
-        break;
-    case StmtK:
-        switch (t->kind.stmt)
-        {
-        case IfK:
-            if (t->child[0]->type == IntegerK && t->child[1]->type == IntegerK)
-                typeError(t->child[0], "if test is not Boolean");
-            break;
-        case AssignK:
-            if (t->child[0]->type != IntegerK || t->child[1]->type != IntegerK)
-                typeError(t->child[0], "assignment of non-integer value");
-            else if (t->child[1]->kind.stmt == CallK)
+        case ExpK:
+            switch (t->kind.exp)
             {
-                if (strcmp(st_lookup_type(t->child[1]->attr.name, "global"), "void") == 0)
-                    typeError(t->child[1], "assignment of void return");
+                case OpK:
+                    break;
+                default:
+                    break;
+            }
+            break;
+        case StmtK:
+            switch (t->kind.stmt)
+            {
+                case IfK:
+                    if (t->child[0]->type == IntegerK && t->child[1]->type == IntegerK)
+                        typeError(t->child[0], "if test is not Boolean");
+                    break;
+                case AssignK:
+                    if (t->child[0]->type != IntegerK || t->child[1]->type != IntegerK)
+                        typeError(t->child[0], "Error 2: Invalid assignment. Trying to assign a void value to an integer");
+                    else if (t->child[1]->kind.stmt == CallK)
+                    {
+                        if (strcmp(st_lookup_type(t->child[1]->attr.name, "global"), "void") == 0)
+                            typeError(t->child[1], "assignment of void return");
+                    }
+                    break;
+                default:
+                    break;
             }
             break;
         default:
             break;
-        }
-        break;
-    default:
-        break;
     }
 }
 

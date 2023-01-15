@@ -27,7 +27,7 @@ programa 			:	declaracao_lista
 					{
 					     savedTree = $1;
 					} 
-					;
+				;
 
 declaracao_lista 	:	declaracao_lista declaracao 
 					{
@@ -483,14 +483,14 @@ num                 :    NUM
 
 int yyerror(char * message)
 { fprintf(listing,"Syntax error at line %d: %s\n",lineno,message);
-  fprintf(listing,"Current token: ");
+  fprintf(listing,"Error on token: ");
   printToken(yychar,tokenString);
   Error = TRUE;
   return 0;
 }
 
 /* yylex calls getToken to make Yacc/Bison output
- * compatible with ealier versions of the TINY scanner
+ * compatible with ealier versions of the C- scanner
  */
 static int yylex(void)
 { return getToken(); }
