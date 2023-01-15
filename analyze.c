@@ -203,8 +203,8 @@ static void checkNode(TreeNode *t)
                         typeError(t->child[0], "if test is not Boolean");
                     break;
                 case AssignK:
-                    if (t->child[0]->type != IntegerK || t->child[1]->type != IntegerK)
-                        typeError(t->child[0], "Error 2: Invalid assignment. Trying to assign a void value to an integer");
+                    if (t->child[0]->type == VoidK)
+                        typeError(t->child[0], "Error 2: Invalid assignment. Trying to assign a void");
                     else if (t->child[1]->kind.stmt == CallK)
                     {
                         if (strcmp(st_lookup_type(t->child[1]->attr.name, "global"), "void") == 0)
